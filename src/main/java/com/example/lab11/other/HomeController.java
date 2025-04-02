@@ -1,4 +1,4 @@
-package com.example.lab11;
+package com.example.lab11.other;
 
 import org.springframework.web.bind.annotation.GetMapping;
  import org.springframework.web.bind.annotation.RestController;
