@@ -25,15 +25,6 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Order updateOrder(Long id, Order updatedOrder) {
-        return orderRepository.findById(id).map(order -> {
-            order.setProductName(updatedOrder.getProductName());
-            order.setQuantity(updatedOrder.getQuantity());
-            order.setPrice(updatedOrder.getPrice());
-            order.setOrderDate(updatedOrder.getOrderDate());
-            return orderRepository.save(order);
-        }).orElseThrow(() -> new RuntimeException("Order not found"));
-    }
 
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);

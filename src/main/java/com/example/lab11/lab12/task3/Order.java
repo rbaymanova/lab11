@@ -1,26 +1,19 @@
 package com.example.lab11.lab12.task3;
 
 
+import com.example.lab11.lab12.task1.Product;
 import com.example.lab11.lab12.task2.Customer;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String productName;
-
-    @Column(nullable = false)
-    private int quantity;
-
-    @Column(nullable = false)
-    private double price;
 
     @Column(nullable = false)
     private LocalDate orderDate;
@@ -32,13 +25,46 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @ManyToMany
+    @JoinTable(
+            name = "order_products",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> products = new ArrayList<>();
+
+
+    public Order(Long id, LocalDate orderDate, String status, Customer customer, List<Product> products) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.customer = customer;
+        this.products = products;
+    }
+
     public Order() {}
 
-    public Order(String productName, int quantity, double price, LocalDate orderDate, String status) {
-        this.productName = productName;
-        this.quantity = quantity;
-        this.price = price;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -50,25 +76,11 @@ public class Order {
         this.customer = customer;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getProductName() { return productName; }
-    public void setProductName(String productName) { this.productName = productName; }
-
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
-
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
-
-    public LocalDate getOrderDate() { return orderDate; }
-    public void setOrderDate(LocalDate orderDate) { this.orderDate = orderDate; }
-
-    public String getStatus() {
-        return status;
+    public List<Product> getProducts() {
+        return products;
     }
-    public void setStatus(String status) {
-        this.status = status;
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

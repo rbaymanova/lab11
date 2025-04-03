@@ -3,6 +3,8 @@ package com.example.lab11.lab12.task4;
 import com.example.lab11.lab12.task5.Project;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "employees")
 public class Employee {
@@ -27,6 +29,9 @@ public class Employee {
     @JoinColumn(name = "project_id", nullable = true)
     private Project project;
 
+    @OneToMany(mappedBy = "assignedEmployee", cascade = CascadeType.ALL)
+    private List<Task> tasks;
+
     public Employee() {}
 
     public Employee(String name, String email, String position, double salary) {
@@ -42,6 +47,13 @@ public class Employee {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public Long getId() { return id; }

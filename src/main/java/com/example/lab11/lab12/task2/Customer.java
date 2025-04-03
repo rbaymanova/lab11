@@ -1,6 +1,9 @@
 package com.example.lab11.lab12.task2;
 
+import com.example.lab11.lab12.task3.Order;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -19,12 +22,22 @@ public class Customer {
     @Column(nullable = false)
     private String region;
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Order> orders;
+
     public Customer() {}
 
     public Customer(String name, String email, String region) {
         this.name = name;
         this.email = email;
         this.region = region;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public Long getId() { return id; }

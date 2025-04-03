@@ -5,45 +5,46 @@ import jakarta.persistence.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "products")
 public class Product {
-
     @Id
     @GeneratedValue
     private Long id;
+
     private String name;
     private double price;
     private int quantity;
 
     @ManyToMany(mappedBy = "products")
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
-    public Product( String name, double price, int quantity) {
+    public Product(Long id, String name, double price, int quantity, List<Order> orders, Category category) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-    }
-
-    public Product() {}
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
         this.orders = orders;
+        this.category = category;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Product() {
+
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -70,5 +71,21 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
+
 

@@ -29,10 +29,7 @@ public class OrderController {
         return orderService.createOrder(order);
     }
 
-    @PutMapping("/{id}")
-    public Order updateOrder(@PathVariable Long id, @RequestBody Order updatedOrder) {
-        return orderService.updateOrder(id, updatedOrder);
-    }
+
 
     @DeleteMapping("/{id}")
     public String deleteOrder(@PathVariable Long id) {
